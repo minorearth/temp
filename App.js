@@ -1,56 +1,57 @@
-import { Text, View, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
+import { Text, View, TextInput, StyleSheet, TouchableOpacity, Button, Image } from 'react-native';
 import { useState, useEffect } from 'react';
-import { styleProps } from 'react-native-web/dist/cjs/modules/forwardedProps';
+import * as ImagePicker from 'expo-image-picker';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 export default function App() {
-
-  const [emailValue, setemailValue] = useState('')
-  const [errorMsg, seterrorMsg] = useState('Здесь будет сообщение об ошибке')
-  const [pswValue, setpswValue] = useState('')
-  const onChange = (val) => {
-    setemailValue(val)
+  const [image, setImage] = useState(null);
+  const storeData = async (value) => {
+    await AsyncStorage.setItem('Image1', value)
+    const zu = await AsyncStorage.getItem('Image1')
+    // console.log(zu);
+    LoadData()
   }
 
-  const SignUP = () => {
+  const LoadData = async () => {
+    const zu = await AsyncStorage.getItem('Image1')
+    var base64Icon = `data:image/png;base64,${zu}`;
+    setImage(base64Icon);
+  }
 
-    if (emailValue.includes('@') == true) {
-      seterrorMsg('Всё ок')
-    } else {
-      seterrorMsg('Введите правильно email')
+  useEffect(() => {
+    LoadData()
+
+
+  }, [])
+
+
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: false,
+      aspect: [4, 3],
+      quality: 1,
+      base64: true
+    });
+
+    // console.log(result.assets[0].base64);
+
+    if (!result.canceled) {
+      storeData(result.assets[0].base64)
+
     }
+  };
 
-  }
+
 
   return (
     <View style={styles.container}>
-      <Text style={{ marginTop: 20 }}>
-        e-mail
-      </Text>
-      <TextInput style={styles.edit1}
-        value={emailValue}
-        onChangeText={(value) => onChange(value)}
-        placeholder="Введите e-mail"
- 
-      // autoCapitalize='characters'
-      >
-      </TextInput>
-      <Text style={{ marginTop: 20 }}>
-        psw
-      </Text>
-      <TextInput style={styles.edit1}
-        value={pswValue}
-        onChangeText={(value) => setpswValue(value)}
-        placeholder="Введите пароль"
-        secureTextEntry
-      // autoCapitalize='characters'
-      >
-      </TextInput>
-      <Text>{errorMsg}</Text>
-      <TouchableOpacity
-        style={styles.btn}
-        onPress={() => SignUP()}>
-        <Text >Sign Up</Text>
-      </TouchableOpacity>
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <Button title="Pick an image from camra roll" onPress={pickImage} />
+        {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
+      </View>
 
 
     </View>
