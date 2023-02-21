@@ -1,5 +1,6 @@
 {
   "expo": {
+    "jsEngine": "hermes",
     "name": "mymtfapp",
     "slug": "mymtfapp",
     "version": "1.0.0",

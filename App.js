@@ -1,97 +1,136 @@
-import { Text, View, TextInput, StyleSheet, TouchableOpacity, Button, Image } from 'react-native';
-import { useState, useEffect } from 'react';
-import * as ImagePicker from 'expo-image-picker';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity } from 'react-native';
+import { useState, useEffect, useRef } from 'react';
+// import { TouchableOpacity } from 'react-native-web';
 
 export default function App() {
-  const [image, setImage] = useState(null);
-  const storeData = async (value) => {
-    await AsyncStorage.setItem('Image1', value)
-    const zu = await AsyncStorage.getItem('Image1')
-    // console.log(zu);
-    LoadData()
-  }
 
-  const LoadData = async () => {
-    const zu = await AsyncStorage.getItem('Image1')
-    var base64Icon = `data:image/png;base64,${zu}`;
-    setImage(base64Icon);
-  }
+  const [FN, setFN] = useState('')
+  const [LN, setLN] = useState('')
+  const [PSW, setPSW] = useState('')
+  const [EM, setEM] = useState('')
+  const [PSWC, setPSWC] = useState('')
+  const [errorM, seterrorM] = useState('Please provide signup data')
 
-  useEffect(() => {
-    LoadData()
+  const CheckProps = () => {
 
+    if (FN == '') {
 
-  }, [])
+      seterrorM('Please Enter first name')
 
+    } else if (PSWC != PSW) {
+      seterrorM('Wrong passcode')
 
-  const pickImage = async () => {
-    // No permissions request is necessary for launching the image library
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: false,
-      aspect: [4, 3],
-      quality: 1,
-      base64: true
-    });
-
-    // console.log(result.assets[0].base64);
-
-    if (!result.canceled) {
-      storeData(result.assets[0].base64)
 
     }
-  };
+    else if (!EM.includes('@') || !EM.includes('.')) {
+      seterrorM('Incorrect mail')
+
+
+    }
+    else {
+      seterrorM('Please provide signup data')
+
+
+    }
 
 
 
-  return (
-    <View style={styles.container}>
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Button title="Pick an image from camra roll" onPress={pickImage} />
-        {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
-      </View>
-
-
-    </View>
-  )
-}
-
-
-const styles = StyleSheet.create({
-  edit1: {
-    width: "70%",
-    height: 50,
-    backgroundColor: "#AA88AA",
-  },
-  btn: {
-    width: '50%',
-    height: 50,
-    backgroundColor: "#FFFFFF",
-    marginTop: 20,
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: 10
 
   }
 
-  ,
-  container:
+  return (
+    <View style={styles.main}>
+      <Text>First name</Text>
+      <TextInput style={styles.edit}
+        placeholder="First"
+        secureTextEntry={true}
+        value={FN}
+        onChangeText={(value) => setFN(value)}
+      ></TextInput>
+      <Text>Last name</Text>
+      <TextInput style={styles.edit}
+        value={LN}
+        onChangeText={(value) => setLN(value)}
+      ></TextInput>
+      <Text>e-mail adress</Text>
+      <TextInput style={styles.edit}
+        value={EM}
+        onChangeText={(value) => setEM(value)}
+      ></TextInput>
+      <Text>Password</Text>
+      <TextInput style={styles.edit}
+        value={PSW}
+        onChangeText={(value) => setPSW(value)}
+      ></TextInput>
+      <Text>Confirm passport</Text>
+      <TextInput style={styles.edit}
+        value={PSWC}
+        onChangeText={(value) => setPSWC(value)}
+      ></TextInput>
 
-  {
-    flex: 1,
-    alignItems: "center",
-    backgroundColor: "#FFAAAA",
+      <TouchableOpacity
+        onPress={() => CheckProps()}
+        style={styles.btn}
+
+
+      >
+        <Text >Sign Up</Text>
+      </TouchableOpacity>
+      <Text>{errorM}</Text>
+
+    </View>
+
+  );
+}
+
+const styles = StyleSheet.create({
+  btn: {
+    height: 50,
+    backgroundColor: "#AAAAAA",
+    width: "50%",
+    margin: 20,
+    borderRadius: 15,
     flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
 
-    // justifyContent: "flex-end"
+
+
+
+  },
+  edit: {
+
+
+    backgroundColor: "#FFFFFF",
+    width: "70%",
+    height: 50,
+    borderRadius: 10,
+  },
+
+  main: {
+    flex: 1,
+    backgroundColor: "#FF00AA",
+    flexDirection: "column",
+    padding: 10,
+    alignItems: "center",
+    paddingTop: 50,
   },
 
 
 
+});
 
-})
+
+
+
+
+
+
+
+
+
+
+
 
 
