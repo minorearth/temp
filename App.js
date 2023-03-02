@@ -3,71 +3,68 @@ import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity } from 'reac
 import { useState, useEffect, useRef } from 'react';
 // import { TouchableOpacity } from 'react-native-web';
 
-export default function App() {
+
+
+const RegEdit = ({EditName}) => {
+
+  console.log(EditName)
 
   const [FN, setFN] = useState('')
+
+  return (
+    <>
+      <Text>{EditName}</Text>
+      <TextInput style={styles.edit}
+        placeholder="First"
+
+        value={FN}
+        onChangeText={(value) => setFN(value)}
+      ></TextInput>
+    </>
+
+
+  )
+
+
+}
+
+
+export default function App() {
+
+ 
   const [LN, setLN] = useState('')
   const [PSW, setPSW] = useState('')
   const [EM, setEM] = useState('')
   const [PSWC, setPSWC] = useState('')
   const [errorM, seterrorM] = useState('Please provide signup data')
 
-  const CheckProps = () => {
+  // const CheckProps = () => {
 
-    if (FN == '') {
+  //   if (FN == '') {
 
-      seterrorM('Please Enter first name')
+  //     seterrorM('Please Enter first name')
 
-    } else if (PSWC != PSW) {
-      seterrorM('Wrong passcode')
+  //   } else if (PSWC != PSW) {
+  //     seterrorM('Wrong passcode')
 
-
-    }
-    else if (!EM.includes('@') || !EM.includes('.')) {
-      seterrorM('Incorrect mail')
-
-
-    }
-    else {
-      seterrorM('Please provide signup data')
-
-
-    }
-
-
-
-
-  }
+  //   }
+  //   else if (!EM.includes('@') || !EM.includes('.')) {
+  //     seterrorM('Incorrect mail')
+  //   }
+  //   else {
+  //     seterrorM('Successful registration')
+  //   }
+  // }
 
   return (
     <View style={styles.main}>
-      <Text>First name</Text>
-      <TextInput style={styles.edit}
-        placeholder="First"
-        secureTextEntry={true}
-        value={FN}
-        onChangeText={(value) => setFN(value)}
-      ></TextInput>
-      <Text>Last name</Text>
-      <TextInput style={styles.edit}
-        value={LN}
-        onChangeText={(value) => setLN(value)}
-      ></TextInput>
-      <Text>e-mail adress</Text>
-      <TextInput style={styles.edit}
-        value={EM}
-        onChangeText={(value) => setEM(value)}
-      ></TextInput>
-      <Text>Password</Text>
-      <TextInput style={styles.edit}
-        value={PSW}
-        onChangeText={(value) => setPSW(value)}
-      ></TextInput>
-      <Text>Confirm passport</Text>
-      <TextInput style={styles.edit}
-        value={PSWC}
-        onChangeText={(value) => setPSWC(value)}
-      ></TextInput>
+      <RegEdit EditName="Firstname"></RegEdit>
+      <RegEdit EditName="LastName"></RegEdit>
+      <RegEdit EditName="email"></RegEdit>     
+      <RegEdit EditName="PSW"></RegEdit>
+      <RegEdit EditName="Confirm PSW"></RegEdit>
+    
+
 
       <TouchableOpacity
         onPress={() => CheckProps()}
@@ -83,6 +80,12 @@ export default function App() {
 
   );
 }
+
+
+
+
+
+
 
 const styles = StyleSheet.create({
   btn: {

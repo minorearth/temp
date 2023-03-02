@@ -29,7 +29,7 @@ export default function App() {
 
     }
     else {
-      seterrorM('Please provide signup data')
+      seterrorM('Successful registration')
 
 
     }
@@ -41,10 +41,10 @@ export default function App() {
 
   return (
     <View style={styles.main}>
-      <Text>First name</Text>
+      <Text>First nam2e</Text>
       <TextInput style={styles.edit}
         placeholder="First"
-        secureTextEntry='true'
+  
         value={FN}
         onChangeText={(value) => setFN(value)}
       ></TextInput>
@@ -61,10 +61,13 @@ export default function App() {
       <Text>Password</Text>
       <TextInput style={styles.edit}
         value={PSW}
+        secureTextEntry={true}
+
         onChangeText={(value) => setPSW(value)}
       ></TextInput>
-      <Text>Confirm passport</Text>
+      <Text>Confirm passports</Text>
       <TextInput style={styles.edit}
+            secureTextEntry={true}
         value={PSWC}
         onChangeText={(value) => setPSWC(value)}
       ></TextInput>
