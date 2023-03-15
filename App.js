@@ -1,139 +1,115 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity } from 'react-native';
-import { useState, useEffect, useRef } from 'react';
-// import { TouchableOpacity } from 'react-native-web';
+import { StyleSheet, Text, View, Image, Animated, TouchableOpacity, PanResponder,FlatList } from 'react-native';
+import { useState, useRef, useEffect } from 'react';
+import Word from './comps/Word'
+import WordList from './comps/WordList';
 
 
-
-const RegEdit = ({EditName}) => {
-
-  console.log(EditName)
-
-  const [FN, setFN] = useState('')
-
-  return (
-    <>
-      <Text>{EditName}</Text>
-      <TextInput style={styles.edit}
-        placeholder="First"
-
-        value={FN}
-        onChangeText={(value) => setFN(value)}
-      ></TextInput>
-    </>
+const words = [
+  { id: 1, word: "Ihr" },
+  { id: 8, word: "hungrig" },
+  { id: 2, word: "isst" },
+  { id: 7, word: "er" },
+  { id: 6, word: "weil" },
+  { id: 9, word: "ist" },
+  { id: 5, word: "," },
+  { id: 3, word: "einen" },
+  { id: 4, word: "Apfel" },
+];
 
 
-  )
-
-
-}
 
 
 export default function App() {
 
+  const [json, setJson] =useState()
+
+  useEffect(()=>{
+
+    getMoviesFromApi()
+
+  },
+   
+  [])
+  
+  const getMoviesFromApi = () => {
+    return fetch('http://mskko2021.mad.hakta.pro/api/quotes')
+      .then(response => response.json())
+      .then(json => {
+        console.log(json.data)
+        setJson(json.data)
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
+
+  
+
+  const DATA = [
+    {
+      id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+      title: 'First Item',
+    },
+    {
+      id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+      title: 'Second Item',
+    },
+    {
+      id: '58694a0f-3da1-471f-bd96-145571e29d72',
+      title: 'Third Item',
+    },
+  ];
+  
+  const Item = ({title, image}) => (
+    <View style={styles.item}>
+      <Text style={styles.title}>{title}</Text>
+      <Image source={image}/>
  
-  const [LN, setLN] = useState('')
-  const [PSW, setPSW] = useState('')
-  const [EM, setEM] = useState('')
-  const [PSWC, setPSWC] = useState('')
-  const [errorM, seterrorM] = useState('Please provide signup data')
-
-  // const CheckProps = () => {
-
-  //   if (FN == '') {
-
-  //     seterrorM('Please Enter first name')
-
-  //   } else if (PSWC != PSW) {
-  //     seterrorM('Wrong passcode')
-
-  //   }
-  //   else if (!EM.includes('@') || !EM.includes('.')) {
-  //     seterrorM('Incorrect mail')
-  //   }
-  //   else {
-  //     seterrorM('Successful registration')
-  //   }
-  // }
-
-  return (
-    <View style={styles.main}>
-      <RegEdit EditName="Firstname"></RegEdit>
-      <RegEdit EditName="LastName"></RegEdit>
-      <RegEdit EditName="email"></RegEdit>     
-      <RegEdit EditName="PSW"></RegEdit>
-      <RegEdit EditName="Confirm PSW"></RegEdit>
-    
+    </View>
+  );
+  
+    return (
+    <View style={{ flex: 1, backgroundColor: '#AAFFAA' }}  >
+        <FlatList
+          data={json}
+          renderItem={({item}) => {return <Item title={item.title} image={item.image}/> } }
+          keyExtractor={item => item.id}
+        />
 
 
-      <TouchableOpacity
-        onPress={() => CheckProps()}
-        style={styles.btn}
 
+      {/* <WordList>
+      {words.map((word) => (
+        <Word key={word.id} {...word} />
+        // <Word/>
 
-      >
-        <Text >Sign Up</Text>
-      </TouchableOpacity>
-      <Text>{errorM}</Text>
+      ))}
+      </WordList> */}
+
 
     </View>
-
-  );
-}
+  )
 
 
 
-
-
+};
 
 
 const styles = StyleSheet.create({
-  btn: {
-    height: 50,
-    backgroundColor: "#AAAAAA",
-    width: "50%",
-    margin: 20,
-    borderRadius: 15,
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-
-
-
-
-  },
-  edit: {
-
-
-    backgroundColor: "#FFFFFF",
-    width: "70%",
-    height: 50,
-    borderRadius: 10,
-  },
-
-  main: {
+  container: {
     flex: 1,
-    backgroundColor: "#FF00AA",
-    flexDirection: "column",
-    padding: 10,
-    alignItems: "center",
-    paddingTop: 50,
+    marginTop: StatusBar.currentHeight || 0,
   },
-
-
-
+  item: {
+    backgroundColor: '#f9c2ff',
+    padding: 20,
+    marginVertical: 8,
+    marginHorizontal: 16,
+  },
+  title: {
+    fontSize: 32,
+  },
 });
-
-
-
-
-
-
-
-
-
-
-
-
 
 

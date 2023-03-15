@@ -22,7 +22,8 @@
     "@shopify/react-native-skia": "0.1.157",
     "expo-camera": "~13.1.0",
     "expo-media-library": "~15.0.0",
-    "expo-file-system": "~15.1.1"
+    "expo-file-system": "~15.1.1",
+    "react-native-pager-view": "6.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"

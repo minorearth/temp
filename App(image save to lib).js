@@ -29,7 +29,7 @@ export default function App() {
   const canvasRef = useCanvasRef()
 
   const pan = Gesture.Pan()
-    .onStart((g) => {
+    onStart((g) => {
       setPathes(`${pathes} M ${g.x} ${g.y}`)
     })
     .onUpdate((g) => {
