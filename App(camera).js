@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from "react";
-import { SafeAreaView, Text, StyleSheet, View, TouchableOpacity } from "react-native";
+import { SafeAreaView, Text, StyleSheet, View, TouchableOpacity,Image } from "react-native";
 import { Camera } from 'expo-camera'
 import {
   Gesture,

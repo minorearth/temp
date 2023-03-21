@@ -12,11 +12,12 @@ const styles = StyleSheet.create({
 
 
 
-const WordList = (props) => {
-  console.log(props)
+const WordList = ({children}) => {
+  // console.log(props)
 
   return(
   <View style={styles.root}>
+    {children.map((item)=>(<View key={item.id}>{item}</View>)   )}
    
   </View>)
 };
