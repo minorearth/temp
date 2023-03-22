@@ -1,99 +1,54 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Image, Animated, TouchableOpacity, PanResponder, FlatList } from 'react-native';
+import { StyleSheet, Text, View, Image, Animated, TouchableOpacity, PanResponder, FlatList,Pressable } from 'react-native';
 import { useState, useRef, useEffect } from 'react';
 
 
+const SuperView = ({ name, setv }) => {
+
+
+  const onPress = () => {
+    if (name == 'view1') {
+      setv({ view1: false, view2: true, view3: false })
+    } 
+    if (name == 'view2') {
+      setv({ view1: false, view2: false, view3: true })
+    } 
+    if (name == 'view3') {
+      setv({ view1: true, view2: false, view3: false })
+    }
 
 
 
-
-const CustomSplash = () => {
-
-
+  }
   return (
-    <View style={{ flex: 1, backgroundColor: '#AAFFAA' }} >
-      <Image
-        source={require('./assets/1.png')}
-        style={{ resizeMode: "cover", flex: 10, width: "100%" }}
-      >
 
-      </Image>
-      <View style={{ backgroundColor: "#253334", flex: 2 }}></View>
-      <Image
-        source={require('./assets/Logo.png')}
-        style={{ resizeMode: "cover", position: "absolute", alignSelf: "center", marginTop: '30%' }}
-      >
+    < View style={{ flex: 1, backgroundColor: "#FFAA00", alignItems: 'center', justifyContent: 'center' }} >
+      <Pressable style={{ borderRadius: 4, backgroundColor: '#7C9A92', width: 211, height: 58, bottom: 50 }} onPress={onPress}>
+        <Text style={{ color: 'white' }}>{name}</Text>
+      </Pressable>
+    </View >
 
-      </Image>
-    </View>
 
   )
-
-
 
 }
 
 
-
-const WelcomeScreen = () => {
-
-
-  return (
-
-    <View style={{ flex: 1, flexDirection: "column", justifyContent:"flex-start" }} >
-      <Image
-        source={require('./assets/1.png')}
-        style={{ resizeMode: "cover", position: "absolute", width: "100%", height: "75%" }}
-      >
-      </Image>
-
-      <View style={{ backgroundColor: "#253334",position: "absolute", top: '75%', height: '25%', left: 0, right: 0 }}></View>
-
-      <Image
-        source={require('./assets/Logo.png')}
-        style={{ resizeMode: "cover",  }}
-      >
-
-      </Image>
-      <Image
-        source={require('./assets/Logo.png')}
-        style={{ resizeMode: "cover", }}
-      ></Image>
-
-    </View>
-
-  )
-
-
-
-}
 
 
 export default function App() {
-
-  const [wnd1, setWnd1] = useState(false)
-  const [wnd2, setWnd2] = useState(true)
-
-  useEffect(() => {
-
-    setTimeout(() => {
-      setWnd2(true)
-      setWnd1(false)
-    }, 2000)
-
-
-
-
-
-  }, [])
+  const [visib, setVisib] = useState({ view1: true, view2: false, view3: false })
 
 
   return (
-    <View style={{ flex: 1, backgroundColor: '#AAFFAA' }}  >
-      {wnd1 && <CustomSplash />}
-      {wnd2 && <WelcomeScreen />}
+    <View style={{ flex: 1 }}>
+      {visib['view1'] && <SuperView name="view1" setv={setVisib} />}
+      {visib['view2']  && <SuperView name="view2" setv={setVisib} />}
+      {visib['view3']  && <SuperView name="view3" setv={setVisib} />}
 
     </View>
+
+
   )
 
 
