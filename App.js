@@ -1,7 +1,8 @@
 import { useEffect,useRef,useState } from "react";
 import { Text, View,TouchableOpacity } from "react-native";
 
-// hello
+// he
+//hello2
 export default App = function () {
    const cat=[
     {
